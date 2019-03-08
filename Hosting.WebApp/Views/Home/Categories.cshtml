@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Top 5 Categories";
+}
+<br />
+<div class="container" id="content-details"></div>
+
+<script id="CategoryList" type="text/ractive">
+    <!-- Jumbotron Header -->
+    <header class="jumbotron my-4">
+        <h1 class="display-3">Welcome to MediaRadar!</h1>
+        <p class="lead">
+            The <b>top five Product Categories</b> by estimated spend. Default sort by number of pages (descending), then product category alphabetically.
+        </p>
+    </header>
+    <div>
+        <table id="tbl-categories" class="table table-striped table-bordered" cellspacing="0" cellpadding="0">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="align-top">Ad Pages</th>
+                    <th scope="col" class="align-top">Est Print Spend</th>
+                    <th scope="col" class="align-top">Product Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each dataModel}}
+                <tr>
+                    <td>{{AdPages}}</td>
+                    <td>{{EstPrintSpend}}</td>
+                    <td>{{ProductCategory}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    {{#if isLoading}}
+    <div class="spinner-image">
+        <img src="/Content/images/Loading.gif" alt="processing..." />
+    </div>
+    {{/if}}
+</script>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            new media.PublicationService().loadCategories("content-details", "CategoryList", "tbl-categories");
+        });
+    </script>
+}
